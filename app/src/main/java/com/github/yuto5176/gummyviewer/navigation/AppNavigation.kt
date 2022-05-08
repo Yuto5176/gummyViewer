@@ -1,8 +1,11 @@
 package com.github.yuto5176.gummyviewer.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.DrawerValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -16,6 +19,7 @@ import com.github.yuto5176.gummyviewer.ui.screens.home.HomeDetailScreen
 import com.github.yuto5176.gummyviewer.ui.screens.home.HomeDetailScreenViewModel
 import com.github.yuto5176.gummyviewer.ui.screens.home.HomeScreen
 import com.github.yuto5176.gummyviewer.ui.screens.home.HomeScreenViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppNavigation(startScreen: String) {
@@ -24,7 +28,8 @@ fun AppNavigation(startScreen: String) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopBarComponent()
+            TopBarComponent(onButtonClicked = {
+            })
         },
         bottomBar = {
             BottomBarComponent(navController = navController)
