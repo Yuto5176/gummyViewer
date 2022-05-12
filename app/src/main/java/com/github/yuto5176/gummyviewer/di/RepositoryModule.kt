@@ -1,7 +1,7 @@
 package com.github.yuto5176.gummyviewer.di
 
 import com.github.yuto5176.gummyviewer.domain.repository.GummyInfoRepository
-import com.github.yuto5176.gummyviewer.repository.GummyInfoRepositoryImpl
+import com.github.yuto5176.gummyviewer.data.repository.GummyInfoRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

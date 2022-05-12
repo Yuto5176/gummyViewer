@@ -2,9 +2,15 @@ buildscript {
     ext {
         compose_version = '1.0.1'
     }
+    // firebase
+    repositories {
+        google()
+    }
     dependencies {
-        //hilt
+        // hilt
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
+        // firebase
+        classpath 'com.google.gms:google-services:4.3.10'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

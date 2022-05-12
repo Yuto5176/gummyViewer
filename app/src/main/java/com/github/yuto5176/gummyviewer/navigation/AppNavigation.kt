@@ -35,7 +35,9 @@ fun AppNavigation(startScreen: String) {
     }
     val closeDrawer = {
         scope.launch {
-            drawerState.close()
+            scaffoldState.drawerState.apply {
+                drawerState.close()
+            }
         }
     }
 
