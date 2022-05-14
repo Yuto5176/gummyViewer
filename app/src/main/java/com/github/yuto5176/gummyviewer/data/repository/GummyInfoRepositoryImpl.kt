@@ -3,6 +3,7 @@ package com.github.yuto5176.gummyviewer.data.repository
 import android.util.Log
 import com.github.yuto5176.gummyviewer.data.model.GummyDetail
 import com.github.yuto5176.gummyviewer.data.model.Image
+import com.github.yuto5176.gummyviewer.data.service.apiFlow
 import com.github.yuto5176.gummyviewer.domain.repository.GummyInfoRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -26,21 +27,22 @@ class GummyInfoRepositoryImpl @Inject constructor() : GummyInfoRepository {
         return GummyDetail(title = name, image = Image(url))
     }
 
-    override suspend fun fetchData(limit: Long): Flow<List<GummyDetail>> = flow {
-        val db = Firebase.firestore
-        var gummyList: List<GummyDetail> = emptyList()
-        val collection = db.collection("gummyDetail")
-        collection.limit(limit).get().addOnSuccessListener {
-        }.addOnCompleteListener { result ->
-            result.result.documents.map { it.data }.mapNotNull {
-                gummyList = listOf(it?.toGummy()) as List<GummyDetail>
-                Log.d("firebase", gummyList.toString())
-            }
-        }
-        delay(1000L)
-        emit(gummyList)
+    override suspend fun fetchData(limit: Long): Flow<List<GummyDetail>> = apiFlow {
+
 
     }.flowOn(Dispatchers.Default).also {
         cache = it
     }
+    //        val db = Firebase.firestore
+//        var gummyList: List<GummyDetail> = emptyList()
+//        val collection = db.collection("gummyDetail")
+//        collection.limit(limit).get().addOnSuccessListener {
+//        }.addOnCompleteListener { result ->
+//            result.result.documents.map { it.data }.mapNotNull {
+//                gummyList = listOf(it?.toGummy()) as List<GummyDetail>
+//                Log.d("firebase", gummyList.toString())
+//            }
+//        }
+//        delay(1000L)
+//        emit(gummyList)
 }
