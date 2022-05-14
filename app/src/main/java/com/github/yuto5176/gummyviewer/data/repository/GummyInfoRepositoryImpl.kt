@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 class GummyInfoRepositoryImpl @Inject constructor() : GummyInfoRepository {
 
-    private val mutex = Mutex()
     private var cache: Flow<List<GummyDetail>>? = null
 
     private fun Map<String, Any>.toGummy(): GummyDetail {
@@ -29,19 +28,18 @@ class GummyInfoRepositoryImpl @Inject constructor() : GummyInfoRepository {
 
     override suspend fun fetchData(limit: Long): Flow<List<GummyDetail>> = flow {
         val db = Firebase.firestore
-        mutex.withLock {
-            var gummyList: List<GummyDetail> = emptyList()
-            val collection = db.collection("gummyDetail")
-            collection.limit(limit).get().addOnSuccessListener {
-            }.addOnCompleteListener { result ->
-                result.result.documents.map { it.data }.mapNotNull {
-                    gummyList = listOf(it?.toGummy()) as List<GummyDetail>
-                    Log.d("firebase", gummyList.toString())
-                }
+        var gummyList: List<GummyDetail> = emptyList()
+        val collection = db.collection("gummyDetail")
+        collection.limit(limit).get().addOnSuccessListener {
+        }.addOnCompleteListener { result ->
+            result.result.documents.map { it.data }.mapNotNull {
+                gummyList = listOf(it?.toGummy()) as List<GummyDetail>
+                Log.d("firebase", gummyList.toString())
             }
-            delay(1000L)
-            emit(gummyList)
         }
+        delay(1000L)
+        emit(gummyList)
+
     }.flowOn(Dispatchers.Default).also {
         cache = it
     }

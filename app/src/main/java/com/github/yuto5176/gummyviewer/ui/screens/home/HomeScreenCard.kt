@@ -20,20 +20,22 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun HomeScreenCard(gummyCards: List<GummyDetail>, navController: NavController) {
+fun HomeScreenCard(gummyCards: List<GummyDetail>, navigate: () -> Unit, modifier: Modifier) {
     Card(
-        modifier = Modifier.fillMaxWidth().clickable { navController.navigate(AppScreen.HomeDetailScreen.route) },
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { navigate() },
         shape = RoundedCornerShape(12.dp),
         elevation = 4.dp
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = modifier.fillMaxWidth()) {
 
             LazyColumn {
-                items(gummyCards.size){
+                items(gummyCards.size) {
                     AsyncImage(
                         model = gummyCards[it].image.url,
                         contentDescription = "image",
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth()
                             .clip(shape = RoundedCornerShape(8.dp))
                     )

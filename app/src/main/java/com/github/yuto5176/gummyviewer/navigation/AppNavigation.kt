@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.github.yuto5176.gummyviewer.components.BottomBarComponent
 import com.github.yuto5176.gummyviewer.components.DrawerComponent
@@ -62,19 +63,26 @@ fun AppNavigation(startScreen: String) {
             NavHost(navController = navController, startDestination = startScreen) {
                 composable(route = AppScreen.HomeScreen.route) {
                     val homeScreenViewModel = hiltViewModel<HomeScreenViewModel>()
-                    HomeScreen(navController = navController, viewModel = homeScreenViewModel)
+                    HomeScreen(
+                        navController = navController,
+                        viewModel = homeScreenViewModel,
+                        navigate = { navController.navigate(AppScreen.HomeDetailScreen.route) })
                 }
 
                 composable(route = AppScreen.HomeDetailScreen.route) {
                     val homeDetailScreenViewModel = hiltViewModel<HomeDetailScreenViewModel>()
-                    HomeDetailScreen(navController = navController,
-                        viewModel = homeDetailScreenViewModel)
+                    HomeDetailScreen(
+                        navController = navController,
+                        viewModel = homeDetailScreenViewModel
+                    )
                 }
 
                 composable(route = AppScreen.FavoriteScreen.route) {
                     val favoriteScreenViewModel = hiltViewModel<FavoriteScreenViewModel>()
-                    FavoriteScreen(navController = navController,
-                        viewModel = favoriteScreenViewModel)
+                    FavoriteScreen(
+                        navController = navController,
+                        viewModel = favoriteScreenViewModel
+                    )
                 }
             }
         }

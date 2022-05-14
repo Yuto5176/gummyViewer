@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 fun HomeScreen(
     navController: NavController,
     viewModel: HomeScreenViewModel,
+    navigate: () -> Unit
 ) {
     val gummyCards = viewModel.gummyCards.collectAsState()
     Surface {
@@ -26,7 +27,7 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "home")
-            HomeScreenCard(gummyCards = gummyCards.value, navController = navController)
+            HomeScreenCard(gummyCards = gummyCards.value, navigate = navigate, modifier = Modifier)
         }
     }
 }
