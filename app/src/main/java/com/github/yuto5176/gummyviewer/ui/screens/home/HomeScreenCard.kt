@@ -21,17 +21,16 @@ import com.google.firebase.ktx.Firebase
 
 @Composable
 fun HomeScreenCard(gummyCards: List<GummyDetail>, navigate: () -> Unit, modifier: Modifier) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { navigate() },
-        shape = RoundedCornerShape(12.dp),
-        elevation = 4.dp
-    ) {
-        Column(modifier = modifier.fillMaxWidth()) {
-
-            LazyColumn {
-                items(gummyCards.size) {
+    LazyColumn {
+        items(gummyCards.size) {
+            Card(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .clickable { navigate() },
+                shape = RoundedCornerShape(12.dp),
+                elevation = 4.dp
+            ) {
+                Column(modifier = modifier.fillMaxWidth()) {
                     AsyncImage(
                         model = gummyCards[it].image.url,
                         contentDescription = "image",
