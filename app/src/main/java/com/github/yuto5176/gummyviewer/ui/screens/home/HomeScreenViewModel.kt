@@ -27,7 +27,7 @@ class HomeScreenViewModel @Inject constructor(
     private fun fetchData() {
         viewModelScope.launch(Dispatchers.IO) {
             gummyInfoRepository.fetchData(5).collectLatest {
-                _gummyCards.value = it
+                _gummyCards.value = it as List<GummyDetail>
             }
         }
     }

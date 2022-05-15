@@ -6,6 +6,7 @@ import com.github.yuto5176.gummyviewer.data.service.FirebaseResult
 import com.github.yuto5176.gummyviewer.domain.repository.GummyInfoRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -19,50 +20,18 @@ class GummyInfoRepositoryImpl @Inject constructor() : GummyInfoRepository {
         return GummyDetail(title = name, image = Image(url))
     }
 
-    override suspend fun fetchData(limit: Long): Flow<FirebaseResult<List<GummyDetail>>> = flow {
-        val db = Firebase.firestore
-        val collection = db.collection("gummyDetail")
-        val snapshotListener = collection.limit(5).addSnapshotListener { value, error ->
-            val response = if (error == null) {
-                FirebaseResult.Success(value)
-            } else {
-                FirebaseResult.Error(error)
+    override suspend fun fetchData(
+        limit: Long
+    ): Flow<List<GummyDetail?>> {
+        return callbackFlow {
+            val db = Firebase.firestore
+            val collection = db.collection("gummyDetail")
+            val snapshotListener = collection.limit(5).addSnapshotListener { value, error ->
+                this.trySend(value)
             }
-        }
-    } .catch { e: Throwable ->
-        //emit(FirebaseResult.Error(e))
+
+            awaitClose { snapshotListener.remove() }
+        }.mapNotNull { it?.documents?.map { it.data?.toGummy() } }
     }
-//        .flowOn(Dispatchers.Default).also {
-//        cache = it
-//    }
 
-//    inline fun apiFlow(crossinline call: suspend () -> Flow<QuerySnapshot>) =
-//        callbackFlow {
-//            val db = Firebase.firestore
-//            val collection = db.collection("gummyDetail")
-//            val snapshotListener = collection.limit(5).addSnapshotListener { value, error ->
-//                val response = if (error == null) {
-//                    FirebaseResult.Success(value)
-//                } else {
-//                    FirebaseResult.Error(error)
-//                }
-//                this.trySend(response).isSuccess
-//            }
-//
-//            awaitClose { snapshotListener.remove() }
-//        }
-
-
-    //        val db = Firebase.firestore
-//        var gummyList: List<GummyDetail> = emptyList()
-//        val collection = db.collection("gummyDetail")
-//        collection.limit(limit).get().addOnSuccessListener {
-//        }.addOnCompleteListener { result ->
-//            result.result.documents.map { it.data }.mapNotNull {
-//                gummyList = listOf(it?.toGummy()) as List<GummyDetail>
-//                Log.d("firebase", gummyList.toString())
-//            }
-//        }
-//        delay(1000L)
-//        emit(gummyList)
 }

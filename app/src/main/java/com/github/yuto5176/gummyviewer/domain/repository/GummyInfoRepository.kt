@@ -5,5 +5,5 @@ import com.github.yuto5176.gummyviewer.data.service.FirebaseResult
 import kotlinx.coroutines.flow.Flow
 
 interface GummyInfoRepository {
-    suspend fun fetchData(limit: Long): Flow<FirebaseResult<List<GummyDetail>>>
+    suspend fun fetchData(limit: Long): Flow<List<GummyDetail?>>
 }
