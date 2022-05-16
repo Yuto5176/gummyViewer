@@ -1,9 +1,9 @@
 package com.github.yuto5176.gummyviewer.components
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Star
@@ -30,9 +30,9 @@ fun BottomBarComponent(
     )
     var selectedItem = remember { mutableStateOf(0) }
 
-    BottomNavigation {
+    NavigationBar {
         items.forEachIndexed { index, item ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = {
                     Icon(imageVector = item.icon,
                         contentDescription = "BottomNavIcon")
