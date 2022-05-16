@@ -21,7 +21,7 @@ import com.github.yuto5176.gummyviewer.data.model.GummyDetail
 @Composable
 fun HomeScreenCard(gummyCards: List<GummyDetail>, navigate:()-> Unit, modifier: Modifier) {
     LazyColumn{
-        item{Spacer(modifier = Modifier.padding(top = 10.dp))}
+        item{Spacer(modifier = Modifier.padding(top = 60.dp))}
         items(gummyCards.size){
             Card(
                 modifier = modifier
@@ -45,5 +45,6 @@ fun HomeScreenCard(gummyCards: List<GummyDetail>, navigate:()-> Unit, modifier: 
                 }
             }
         }
+        item{Spacer(modifier = Modifier.padding(top = 80.dp))}
     }
 }

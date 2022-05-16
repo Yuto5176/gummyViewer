@@ -1,14 +1,15 @@
 package com.github.yuto5176.gummyviewer.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.github.yuto5176.gummyviewer.components.BottomBarComponent
 import com.github.yuto5176.gummyviewer.components.DrawerComponent
@@ -21,6 +22,7 @@ import com.github.yuto5176.gummyviewer.ui.screens.home.HomeScreen
 import com.github.yuto5176.gummyviewer.ui.screens.home.HomeScreenViewModel
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation(startScreen: String) {
     val navController = rememberNavController()
@@ -51,40 +53,41 @@ fun AppNavigation(startScreen: String) {
         },
         bottomBar = {
             BottomBarComponent(navController = navController)
-        }
-    ) {
-        ModalDrawer(
-            drawerState = drawerState,
-            gesturesEnabled = drawerState.isOpen,
-            drawerContent = {
-                DrawerComponent()
-            }
-        ) {
-            NavHost(navController = navController, startDestination = startScreen) {
-                composable(route = AppScreen.HomeScreen.route) {
-                    val homeScreenViewModel = hiltViewModel<HomeScreenViewModel>()
-                    HomeScreen(
-                        navController = navController,
-                        viewModel = homeScreenViewModel,
-                        navigate = { navController.navigate(AppScreen.HomeDetailScreen.route) })
+        },
+        content = { it
+            ModalNavigationDrawer(
+                drawerState = drawerState,
+                gesturesEnabled = drawerState.isOpen,
+                drawerContent = {
+                    DrawerComponent()
                 }
+            ) {
+                NavHost(navController = navController, startDestination = startScreen) {
+                    composable(route = AppScreen.HomeScreen.route) {
+                        val homeScreenViewModel = hiltViewModel<HomeScreenViewModel>()
+                        HomeScreen(
+                            navController = navController,
+                            viewModel = homeScreenViewModel,
+                            navigate = { navController.navigate(AppScreen.HomeDetailScreen.route) })
+                    }
 
-                composable(route = AppScreen.HomeDetailScreen.route) {
-                    val homeDetailScreenViewModel = hiltViewModel<HomeDetailScreenViewModel>()
-                    HomeDetailScreen(
-                        navController = navController,
-                        viewModel = homeDetailScreenViewModel
-                    )
-                }
+                    composable(route = AppScreen.HomeDetailScreen.route) {
+                        val homeDetailScreenViewModel = hiltViewModel<HomeDetailScreenViewModel>()
+                        HomeDetailScreen(
+                            navController = navController,
+                            viewModel = homeDetailScreenViewModel
+                        )
+                    }
 
-                composable(route = AppScreen.FavoriteScreen.route) {
-                    val favoriteScreenViewModel = hiltViewModel<FavoriteScreenViewModel>()
-                    FavoriteScreen(
-                        navController = navController,
-                        viewModel = favoriteScreenViewModel
-                    )
+                    composable(route = AppScreen.FavoriteScreen.route) {
+                        val favoriteScreenViewModel = hiltViewModel<FavoriteScreenViewModel>()
+                        FavoriteScreen(
+                            navController = navController,
+                            viewModel = favoriteScreenViewModel
+                        )
+                    }
                 }
             }
         }
-    }
+    )
 }
