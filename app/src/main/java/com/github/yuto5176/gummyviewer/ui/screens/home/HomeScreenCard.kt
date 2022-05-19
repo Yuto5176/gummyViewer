@@ -19,32 +19,45 @@ import com.github.yuto5176.gummyviewer.data.model.GummyDetail
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenCard(gummyCards: List<GummyDetail>, navigate:()-> Unit, modifier: Modifier) {
-    LazyColumn{
-        item{Spacer(modifier = Modifier.padding(top = 60.dp))}
-        items(gummyCards.size){
-            Card(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp, horizontal = 20.dp)
-                    .clickable{navigate()},
-                shape =RoundedCornerShape(16.dp)
-            ){
-                Column(modifier = modifier.fillMaxWidth()){
-                    AsyncImage(
-                        model = gummyCards[it].image.url,
-                        contentDescription = "image",
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .clip(shape =RoundedCornerShape(8.dp))
-                    )
-                    Text(
-                        modifier = modifier.padding(vertical = 20.dp, horizontal = 15.dp),
-                        text = gummyCards[it].title
-                    )
+fun HomeScreenCard(
+    gummyCards: List<GummyDetail>,
+    modifier: Modifier,
+    onClickButton: (String, String, String, String) -> Unit = { _, _, _, _ -> }
+) {
+    LazyColumn {
+        item { Spacer(modifier = Modifier.padding(top = 60.dp)) }
+        item {
+            gummyCards.forEach {
+                Card(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp, horizontal = 20.dp)
+                        .clickable {
+                            onClickButton(
+                                it.seller,
+                                it.description,
+                                it.title,
+                                it.image.url
+                            )
+                        },
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(modifier = modifier.fillMaxWidth()) {
+                        AsyncImage(
+                            model = it.image.url,
+                            contentDescription = "image",
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .clip(shape = RoundedCornerShape(8.dp))
+                        )
+                        Text(
+                            modifier = modifier.padding(vertical = 20.dp, horizontal = 15.dp),
+                            text = it.title
+                        )
+                    }
                 }
             }
         }
-        item{Spacer(modifier = Modifier.padding(top = 80.dp))}
+        item { Spacer(modifier = Modifier.padding(top = 80.dp)) }
     }
 }
