@@ -5,9 +5,10 @@ data class Gummies(
 )
 
 data class GummyDetail(
-    val id: String = "",
+    val seller: String,
+    val description: String,
     val title: String,
-    val image: Image,
+    val image: Image
 )
 
 data class Image(
