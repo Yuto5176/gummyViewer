@@ -1,5 +1,6 @@
 package com.github.yuto5176.gummyviewer.ui.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.github.yuto5176.gummyviewer.data.model.GummyDetail
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +40,7 @@ fun HomeScreenCard(
                                 it.seller,
                                 it.description,
                                 it.title,
-                                it.image.url
+                                URLEncoder.encode(it.image.url, StandardCharsets.UTF_8.toString())
                             )
                         },
                     shape = RoundedCornerShape(16.dp)
@@ -48,8 +51,9 @@ fun HomeScreenCard(
                             contentDescription = "image",
                             modifier = modifier
                                 .fillMaxWidth()
-                                .clip(shape = RoundedCornerShape(8.dp))
                         )
+//                        Text(text = it.image.url)
+                        Log.d("imagePathPre:", it.image.url)
                         Text(
                             modifier = modifier.padding(vertical = 20.dp, horizontal = 15.dp),
                             text = it.title

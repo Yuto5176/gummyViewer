@@ -1,5 +1,6 @@
 package com.github.yuto5176.gummyviewer.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
@@ -33,6 +34,7 @@ fun AppNavigation(startScreen: String) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+    val nav = navController.currentBackStackEntryFlow
     val openDrawer = {
         scope.launch {
             scaffoldState.drawerState.apply {
@@ -51,9 +53,9 @@ fun AppNavigation(startScreen: String) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopBarComponent {
-                if (drawerState.isClosed) openDrawer() else closeDrawer()
-            }
+//            TopBarComponent {
+//                if (drawerState.isClosed) openDrawer() else closeDrawer()
+//            }
         },
         bottomBar = {
             BottomBarComponent(navController = navController)
@@ -74,9 +76,7 @@ fun AppNavigation(startScreen: String) {
                             navController = navController,
                             viewModel = homeScreenViewModel
                         ) { seller, description, title, imagePath ->
-                            val imagePathReplaced =
-                                imagePath.replace(oldValue = "/", newValue = "^")
-                            navController.navigate("${AppScreen.HomeDetailScreen.route}/${seller}/${description}/${title}/${imagePathReplaced}")
+                            navController.navigate("${AppScreen.HomeDetailScreen.route}/${seller}/${description}/${title}/${imagePath}")
                         }
                     }
 
@@ -94,8 +94,7 @@ fun AppNavigation(startScreen: String) {
                         val description =
                             backStackEntry.arguments?.getString("description") ?: "null"
                         val title = backStackEntry.arguments?.getString("title") ?: "null"
-                        val imagePath = backStackEntry.arguments?.getString("imagePath")
-                            ?.replace(oldValue = "^", newValue = "/") ?: "null"
+                        val imagePath = backStackEntry.arguments?.getString("imagePath")?: "null"
                         HomeDetailScreen(
                             navController = navController,
                             viewModel = homeDetailScreenViewModel,
