@@ -1,9 +1,6 @@
 package com.github.yuto5176.gummyviewer.ui.screens.home
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -42,27 +39,28 @@ fun HomeDetailScreen(
                     .height(500.dp),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Text(
-                    modifier = Modifier.padding(top = 30.dp, start = 25.dp, end = 25.dp),
-                    text = gummyDetail.title,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    modifier = Modifier.padding(top = 15.dp, start = 25.dp, end = 25.dp),
-                    text = gummyDetail.seller,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    modifier = Modifier.padding(top = 50.dp, start = 25.dp, end = 25.dp),
-                    text = "About",
-                    style = MaterialTheme.typography.titleSmall
-                )
-                Text(
-                    modifier = Modifier.padding(top = 15.dp, start = 25.dp, end = 25.dp),
-                    text = gummyDetail.description,
-                    style = MaterialTheme.typography.bodySmall
-                )
-
+                Column(modifier = Modifier.padding(start = 30.dp, end = 30.dp)) {
+                    Text(
+                        modifier = Modifier.padding(top = 40.dp),
+                        text = gummyDetail.title,
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 15.dp),
+                        text = gummyDetail.seller,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 50.dp),
+                        text = "About",
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 15.dp),
+                        text = gummyDetail.description,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
 
         }
