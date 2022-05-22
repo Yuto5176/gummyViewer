@@ -34,7 +34,7 @@ fun HomeScreenCard(
             ) {
                 Text(
                     modifier = modifier.padding(10.dp),
-                    text = "GummyViewer",
+                    text = "Gummy Viewer",
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
@@ -62,11 +62,10 @@ fun HomeScreenCard(
                             modifier = modifier
                                 .fillMaxWidth()
                         )
-//                        Text(text = it.image.url)
-                        Log.d("imagePathPre:", it.image.url)
                         Text(
-                            modifier = modifier.padding(vertical = 20.dp, horizontal = 15.dp),
-                            text = it.title
+                            modifier = modifier.padding(vertical = 20.dp, horizontal = 25.dp),
+                            text = it.title,
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                 }
