@@ -15,9 +15,11 @@ class GummyInfoRepositoryImpl @Inject constructor() : GummyInfoRepository {
     //private var cache: Flow<List<GummyDetail>>? = null
 
     private fun Map<String, Any>.toGummy(): GummyDetail {
+        val seller = this["seller"] as String
         val name = this["name"] as String
         val url = this["image"] as String
-        return GummyDetail(title = name, image = Image(url))
+        val description = this["description"] as String
+        return GummyDetail(seller = seller, title = name, image = Image(url), description = description)
     }
 
     override suspend fun fetchData(
@@ -29,7 +31,6 @@ class GummyInfoRepositoryImpl @Inject constructor() : GummyInfoRepository {
             val snapshotListener = collection.limit(5).addSnapshotListener { value, error ->
                 this.trySend(value)
             }
-
             awaitClose { snapshotListener.remove() }
         }.mapNotNull { it?.documents?.map { it.data?.toGummy() } }
     }
