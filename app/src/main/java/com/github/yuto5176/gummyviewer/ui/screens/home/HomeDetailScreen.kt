@@ -67,7 +67,7 @@ fun HomeDetailScreen(
     }
     Button(
         modifier = Modifier.padding(start = 10.dp, top = 10.dp),
-        onClick = { navController.popBackStack() }
+        onClick = { navController.popBackStack() },
     ) {
         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
     }
