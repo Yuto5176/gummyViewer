@@ -37,9 +37,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        
-    - name: Build with Gradle
-      run: ./gradlew build
 
     # Gradleのキャッシュ復元
     - uses: actions/cache@v2
