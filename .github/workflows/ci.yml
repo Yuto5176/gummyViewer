@@ -55,3 +55,10 @@ jobs:
     # コンパイル
     - name: Run Compile
       run: ./gradlew assembleDebug
+      
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-artifacts-${{ github.run_number }}
+        path: ./app/build/outputs/apk/release/*.apk
+        retention-days: 3
